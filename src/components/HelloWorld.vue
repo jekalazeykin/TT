@@ -1,23 +1,27 @@
 <template>
   <div class="hello">
-    <div class="card" v-for="card in cards">
-    <!-- <div v-if="result.GroupId == 'g1'">
+    <div class="card" v-for="result in results">
+    <div v-if="result.GroupId == 'g1'">
       <h3>{{result.Caption}}</h3>
       <img v-bind:src="result.Img" alt="">
     </div>
-    <div v-else-if="result.GroupId == 'g2'">
-      <h3>{{result.Caption}}</h3>
-      <img v-bind:src="result.Img" alt="">
-    </div>
-    <div v-else-if="result.GroupId == 'g3'">
-      <h3>{{result.Caption}}</h3>
-      <img v-bind:src="result.Img" alt="">
-    </div> -->
-
-    <h3>{{card.Caption}}</h3>
-    <img v-bind:src="card.Img" alt="">
-
       </div>
+        <div class="card" v-for="result in results">
+    <div v-if="result.GroupId == 'g2'">
+      <h3>{{result.Caption}}</h3>
+      <img v-bind:src="result.Img" alt="">
+    </div>
+      </div>
+        <div class="card" v-for="result in results">
+    <div v-if="result.GroupId == 'g3'">
+      <h3>{{result.Caption}}</h3>
+      <img v-bind:src="result.Img" alt="">
+    </div>
+</div>
+    <!-- <h3>{{card.Caption}}</h3>
+    <img v-bind:src="card.Img" alt=""> -->
+
+
   </div>
 </template>
 
@@ -67,28 +71,18 @@ ticket: null
   }
   )
 
-},
-sortOnCategory(result1, result2) {
-    console.log(parseInt(result1.GroupId) - parseInt(result2.GroupId))
-    return (parseInt(result1.GroupId) - parseInt(result2.GroupId))
-
-},
-async showTest () {
-  this.cards = await this.results.sort(this.sortOnCategory)
-  console.log(`это карты ${this.cards}`)
 }
 
 },
 created: function() {
   this.getInfo()
-  this.showTest()
 }
 
   }
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add "scoped" attribute to limit CSS to this component only
 <style scoped>
 h1, h2 {
   font-weight: normal;
