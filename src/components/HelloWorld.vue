@@ -1,26 +1,32 @@
 <template>
-  <div class="hello">
-    <div class="card" v-for="result in results">
-    <div v-if="result.GroupId == 'g1'">
-      <h3>{{result.Caption}}</h3>
+  <div class="container">
+    <div class="category" >
+       {{categories[0].Caption}}
+    </div>
+    <div class="small-container">
+    <div v-if="result.GroupId == 'g1'" class="card" v-for="result in results">
+      <h4>{{result.Caption}}</h4>
       <img v-bind:src="result.Img" alt="">
     </div>
       </div>
-        <div class="card" v-for="result in results">
-    <div v-if="result.GroupId == 'g2'">
-      <h3>{{result.Caption}}</h3>
+      <div class="category" >
+         {{categories[1].Caption}}
+      </div>
+    <div class="small-container">
+    <div v-if="result.GroupId == 'g2'" class="card" v-for="result in results" >
+      <h4>{{result.Caption}}</h4>
       <img v-bind:src="result.Img" alt="">
     </div>
-      </div>
-        <div class="card" v-for="result in results">
-    <div v-if="result.GroupId == 'g3'">
-      <h3>{{result.Caption}}</h3>
+    </div>
+    <div class="category" >
+       {{categories[2].Caption}}
+    </div>
+    <div class="small-container">
+    <div v-if="result.GroupId == 'g3'"  class="card" v-for="result in results" >
+      <h4>{{result.Caption}}</h4>
       <img v-bind:src="result.Img" alt="">
     </div>
 </div>
-    <!-- <h3>{{card.Caption}}</h3>
-    <img v-bind:src="card.Img" alt=""> -->
-
 
   </div>
 </template>
@@ -31,7 +37,8 @@ export default {
   data () {
     return {
       results: [],
-      cards: []
+      cards: [],
+      categories: []
     }
   },
   methods: {
@@ -55,35 +62,58 @@ ticket: null
 })
 
     .then(response => {
-      // console.log(response.json())
       response.json().then(data => ({
         data: data,
         status: response.status
     })
     ).then(res => {
-    // console.log( res.data)
-    // let str = res.data.d
-    // let arr = str.spit('')
-    // console.log(arr)
+
   this.results =  JSON.parse(res.data.d)
     console.log(this.results )
     })
   }
   )
+},
+getCategory () {
+  fetch('http://m.it.ua/ws/WebService.asmx/ExecuteEx', {
+    method: 'POST',
+    body: JSON.stringify({
 
+      calcId: '_MOCK.GET_GROUPS',
+      args: null,
+      ticket: null
+
+    }),
+    headers: {
+    Accept: 'json',
+    'Content-Type': 'application/json',
+  }
+})    .then(response => {
+      response.json().then(data => ({
+        data: data,
+        status: response.status
+    })
+    ).then(res => {
+
+  this.categories =  JSON.parse(res.data.d)
+    console.log(this.categories )
+    })
+  }
+  )
 }
 
 },
 created: function() {
-  this.getInfo()
+  this.getInfo();
+  this.getCategory();
 }
 
   }
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only
-<style scoped>
+Add "scoped" attribute to limit CSS to this component only
+<style>
 h1, h2 {
   font-weight: normal;
 }
@@ -97,5 +127,33 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.small-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-around; */
+}
+.card {
+  /* width: 20vw;
+  height: 20vh; */
+  border: 2px solid #103370;
+  margin: 5px 5px;
+}
+
+img {
+  width: 20vw;
+  height: 20vh;
+}
+h4 {
+  width: 20vw;
+}
+
+.category{
+  width: 80vw;
+  height: 10vh;
+  background-color:  #103370;
+  color: #fff;
+  font-size: 130%;
 }
 </style>
