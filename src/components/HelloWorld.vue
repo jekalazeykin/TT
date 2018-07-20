@@ -1,15 +1,18 @@
 <template>
   <div class="container">
-    <div class="category" >
+    <div class="category" v-on:click=" makeMarkup(categories[0].Id)">
        {{categories[0].Caption}}
     </div>
+    <!-- <div class="category-card">
+
+    </div> -->
     <div class="small-container">
     <div v-if="result.GroupId == 'g1'" class="card" v-for="result in results">
       <h4>{{result.Caption}}</h4>
       <img v-bind:src="result.Img" alt="">
     </div>
       </div>
-      <div class="category" >
+      <div class="category"  v-on:click="categoryDescription(categories[1].Id)">
          {{categories[1].Caption}}
       </div>
     <div class="small-container">
@@ -18,7 +21,7 @@
       <img v-bind:src="result.Img" alt="">
     </div>
     </div>
-    <div class="category" >
+    <div class="category"  v-on:click="categoryDescription(categories[2].Id)">
        {{categories[2].Caption}}
     </div>
     <div class="small-container">
@@ -38,7 +41,8 @@ export default {
     return {
       results: [],
       cards: [],
-      categories: []
+      categories: [],
+      description: ''
     }
   },
   methods: {
@@ -100,12 +104,78 @@ getCategory () {
     })
   }
   )
-}
+},
 
+async makeMarkup(num) {
+  let a = await this.categoryDescription(num)
+  console.log(a)
+  let markup = document.querySelector('.category');
+  markup.insertAdjacentHTML('afterend', a);
+},
+
+categoryDescription (num) {
+  // for (let i = 0; i < this.categories.length; i++) {
+
+  console.log(`это категория ${num}`)
+   return fetch('http://m.it.ua/ws/WebService.asmx/ExecuteEx', {
+    method: 'POST',
+    body: JSON.stringify({
+
+      calcId: '_MOCK.GET_GROUP_DESCRIPTION',
+      // args: '{"groupId":"g1"}',
+      args: `{"groupId":"${num}"}`,
+      ticket: null
+
+    }),
+    headers: {
+    Accept: 'json',
+    'Content-Type': 'application/json',
+  }
+})    .then(response => {
+      response.json().then(data => ({
+        data: data,
+        status: response.status
+    })
+    ).then(res => {
+
+  this.description =  JSON.parse(res.data.d)
+    console.log(this.description )
+    })
+  }
+)
+// }
+  // setTimeout(this.makeMarkup, 3000)
+
+},
+  test () {
+
+    fetch('http://m.it.ua/ws/WebService.asmx/ExecuteEx', {
+    method: 'POST',
+    body: JSON.stringify({
+
+      calcId: '_MOCK.GET_GROUP_DESCRIPTION',
+       args: '{"groupId":"g1"}',
+      ticket: null
+
+    }),
+    headers: {
+    Accept: 'json',
+    'Content-Type': 'application/json',
+  }
+}).then(response => {
+       if (response.ok)
+  console.log(response.json())
+
+  }
+)
+  }
 },
 created: function() {
   this.getInfo();
   this.getCategory();
+ // this.categoryDescription();
+ this.test();
+
 }
 
   }
