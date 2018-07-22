@@ -1,20 +1,13 @@
 <template>
   <div id="app">
-    <header>
-      <h3>{{title}}</h3>
-    </header>
+
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App',
-  data () {
-    return {
-      title: 'Catalog'
-    }
-  }
+  name: 'App'
 }
 </script>
 
@@ -32,12 +25,7 @@ p, h3 {
   text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
-  max-width: 1440px;
+  /* max-width: 1440px; */
 }
 
-header {
-  width: 100%;
-  background-color: #6c737f;
-  height: 80px;
-}
 </style>
