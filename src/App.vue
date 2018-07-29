@@ -200,7 +200,9 @@ export default {
     cursor: pointer;
     z-index: 200000;
   }
-
+  .menu_logo:hover {
+    opacity: 0.8;
+  }
   .up {
     position: fixed;
     width: 50px;
@@ -209,5 +211,8 @@ export default {
     right: 8px;
     z-index: 2000;
     cursor: pointer;
+  }
+  .up:hover {
+    opacity: 0.7;
   }
 </style>

@@ -207,7 +207,9 @@ export default {
     box-shadow: 0 5px 4px rgb(126, 147, 181);
     border-radius: 10px;
   }
-
+  .category:hover {
+    opacity: 0.7;
+  }
   .wire {
     background-color: #fff;
     width: 84.7vw;
